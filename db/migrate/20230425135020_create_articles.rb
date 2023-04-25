@@ -6,7 +6,7 @@ class CreateArticles < ActiveRecord::Migration[6.1]
       t.string :link
       t.integer :country_id
       t.integer :category_id
-      t.timestamp
+      t.timestamps
     end
   end
 end
