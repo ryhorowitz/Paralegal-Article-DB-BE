@@ -1,4 +1,4 @@
 class Article < ActiveRecord::Base
-  belongs_to :countries
-  belongs_to :categories
+  belongs_to :country
+  belongs_to :category
 end
