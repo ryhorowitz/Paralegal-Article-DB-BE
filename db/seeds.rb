@@ -13,18 +13,22 @@ CSV.foreach("db/seed_categories.csv", headers: true) do |row|
   category.save
 end
 
-# CSV.foreach("db/seed_categories.csv", headers: true) do |row|
-#   article = Article.new
-#   article.title = row["title"]
-#   article.published = row["published"]
-#   article.link = row["link"]
-#   article.country_id = row["country_id"]
-#   article.category_id = row["category_id"]
-#   article.save
-# end
+CSV.foreach("db/seed_articles.csv", headers: true) do |row|
+  article = Article.new
+  article.title = row["title"]
+  article.published = row["published"]
+  article.link = row["link"]
+  country = Country.find_by(name: row["country"])
+  puts country.name
+  puts country.id
+  puts article.published
+  article.country_id = country.id
+  category = Category.find_by(name: row["category"])
+  article.category_id = category.id
+  article.save
+end
 # Seed your database here
-# using ruby i can parse it as a csv
-# loop through file and Model.Create a record for everyline
+
 puts "✅ Done seeding!"
 
 # how do I drop table
