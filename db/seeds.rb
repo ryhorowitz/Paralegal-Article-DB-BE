@@ -1,5 +1,12 @@
 require "csv"
+require "date"
+
 puts "🌱 Seeding spices..."
+
+def convert_date(date)
+  date_string = Date.strptime(date, "%m/%d/%Y")
+  international_date = date_string.strftime("%Y-%m-%d")
+end
 
 CSV.foreach("db/seed_countries.csv", headers: true) do |row|
   country = Country.new
@@ -14,16 +21,19 @@ CSV.foreach("db/seed_categories.csv", headers: true) do |row|
 end
 
 CSV.foreach("db/seed_articles.csv", headers: true) do |row|
-  article = Article.new
-  article.title = row["title"]
-  article.published = row["published"]
-  article.link = row["link"]
   country = Country.find_by(name: row["country"])
   puts country.name
   puts country.id
-  puts article.published
-  article.country_id = country.id
   category = Category.find_by(name: row["category"])
+
+  published = convert_date row["published"]
+
+  article = Article.new
+  article.title = row["title"]
+  article.published = published
+  puts article.published
+  article.link = row["link"]
+  article.country_id = country.id
   article.category_id = category.id
   article.save
 end
