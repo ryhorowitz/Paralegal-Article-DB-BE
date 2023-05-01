@@ -6,6 +6,7 @@ class ApplicationController < Sinatra::Base
     # { message: "Good luck with your project!" }.to_json
     # get all articles
     articles = Article.all
-    articles.to_json
+
+    articles.to_json(include: [{ category: { only: :name } }, { country: { only: :name } }])
   end
 end
