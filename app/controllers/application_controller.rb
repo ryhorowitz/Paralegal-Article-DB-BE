@@ -13,13 +13,12 @@ class ApplicationController < Sinatra::Base
 
   get "/categories" do
     categories = Category.all
-    p categories
+    # p categories
     categories.to_json(include: :articles)
   end
 
-  post "/" do
-    # request object is??? check school docs
-    p params
-    nil
+  get "/articles" do
+    # i should receive country_id and category_id
+    binding.pry
   end
 end
