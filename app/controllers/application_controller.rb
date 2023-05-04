@@ -29,4 +29,11 @@ class ApplicationController < Sinatra::Base
     article = Article.create(params)
     article.to_json
   end
+
+  delete "/article/:id" do
+    article = Article.find(params[:id])
+    binding.pry
+    article.destroy
+    article.to_json
+  end
 end
