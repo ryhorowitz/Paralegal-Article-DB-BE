@@ -25,6 +25,8 @@ class ApplicationController < Sinatra::Base
 
   post "/new_article" do
     # grab body and validate
-    binding.pry
+    # binding.pry
+    article = Article.create(params)
+    article.to_json
   end
 end
