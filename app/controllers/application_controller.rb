@@ -18,7 +18,8 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/articles" do
-    # i should receive country_id and category_id
-    binding.pry
+    articles = Article.where(["country_id = '%s' and category_id = '%s'", params[:country_id], params[:category_id]])
+    # binding.pry
+    articles.to_json
   end
 end
