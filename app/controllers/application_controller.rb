@@ -22,4 +22,9 @@ class ApplicationController < Sinatra::Base
     # binding.pry
     articles.to_json
   end
+
+  post "/new_article" do
+    # grab body and validate
+    binding.pry
+  end
 end
