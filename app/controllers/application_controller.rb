@@ -24,7 +24,6 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/new_article" do
-    # grab body and validate
     # binding.pry
     article = Article.create(params)
     article.to_json
@@ -32,8 +31,13 @@ class ApplicationController < Sinatra::Base
 
   delete "/article/:id" do
     article = Article.find(params[:id])
-    binding.pry
+    # binding.pry
     article.destroy
     article.to_json
+  end
+
+  patch "/article/:id" do
+    article = Article.find(params[:id])
+    binding.pry
   end
 end
