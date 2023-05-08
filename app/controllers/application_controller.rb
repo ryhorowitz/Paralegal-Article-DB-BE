@@ -38,6 +38,19 @@ class ApplicationController < Sinatra::Base
 
   patch "/article/:id" do
     article = Article.find(params[:id])
-    binding.pry
+    # binding.pry
+    article.update(
+      title: params[:title],
+      link: params[:link],
+      published: params[:published],
+      country_id: params[:country_id],
+      category_id: params[:category_id],
+    )
+    article.to_json
+  end
+
+  post "/country" do
+    country = Country.create(params)
+    country.to_json
   end
 end
