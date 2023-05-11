@@ -1,7 +1,7 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, "application/json"
 
-  get "/" do
+  get "/articles" do
     articles = Article.all
     articles.to_json(include: [{ category: { only: :name } }, { country: { only: :name } }])
   end
@@ -13,11 +13,10 @@ class ApplicationController < Sinatra::Base
 
   get "/categories" do
     categories = Category.all
-    # p categories
     categories.to_json(include: :articles)
   end
 
-  get "/articles" do
+  get "/articles/country/category" do
     articles = Article.where(["country_id = '%s' and category_id = '%s'", params[:country_id], params[:category_id]])
     # binding.pry
     articles.to_json
@@ -51,6 +50,9 @@ class ApplicationController < Sinatra::Base
 
   post "/country" do
     country = Country.create(params)
-    country.to_json
+    # binding.pry
+    # return countries
+    countries = Country.all
+    countries.to_json(include: :articles)
   end
 end

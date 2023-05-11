@@ -21,8 +21,6 @@ CSV.foreach("db/seed_categories.csv", headers: true) do |row|
 end
 
 CSV.foreach("db/seed_articles.csv", headers: true) do |row|
-  # puts country.name
-  # puts country.id
   country = Country.find_by(name: row["country"])
   category = Category.find_by(name: row["category"])
   published = convert_date row["published"]
@@ -30,7 +28,6 @@ CSV.foreach("db/seed_articles.csv", headers: true) do |row|
   article = Article.new
   article.title = row["title"]
   article.published = published
-  # puts article.published
   article.link = row["link"]
   article.country_id = country.id
   article.category_id = category.id
@@ -38,7 +35,3 @@ CSV.foreach("db/seed_articles.csv", headers: true) do |row|
 end
 
 puts "✅ Done seeding!"
-
-# how do I drop table
-# bundle exec rake db:drop:all
-# bundle exec rake db:migrate db:seed
