@@ -23,21 +23,26 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/new_article" do
-    # binding.pry
     article = Article.create(params)
-    article.to_json
+    articles = Article.all
+    articles.to_json(include: [{ category: { only: :name } }, { country: { only: :name } }])
+  end
+
+  post "/country" do
+    country = Country.create(params)
+    countries = Country.all
+    countries.to_json(include: :articles)
   end
 
   delete "/article/:id" do
     article = Article.find(params[:id])
-    # binding.pry
     article.destroy
-    article.to_json
+    articles = Article.all
+    articles.to_json(include: [{ category: { only: :name } }, { country: { only: :name } }])
   end
 
   patch "/article/:id" do
     article = Article.find(params[:id])
-    # binding.pry
     article.update(
       title: params[:title],
       link: params[:link],
@@ -45,14 +50,7 @@ class ApplicationController < Sinatra::Base
       country_id: params[:country_id],
       category_id: params[:category_id],
     )
-    article.to_json
-  end
-
-  post "/country" do
-    country = Country.create(params)
-    # binding.pry
-    # return countries
-    countries = Country.all
-    countries.to_json(include: :articles)
+    articles = Article.all
+    articles.to_json(include: [{ category: { only: :name } }, { country: { only: :name } }])
   end
 end
