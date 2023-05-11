@@ -1,9 +1,13 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, "application/json"
 
-  get "/articles" do
+  def getArticles
     articles = Article.all
     articles.to_json(include: [{ category: { only: :name } }, { country: { only: :name } }])
+  end
+
+  get "/articles" do
+    getArticles
   end
 
   get "/countries" do
@@ -24,8 +28,7 @@ class ApplicationController < Sinatra::Base
 
   post "/new_article" do
     article = Article.create(params)
-    articles = Article.all
-    articles.to_json(include: [{ category: { only: :name } }, { country: { only: :name } }])
+    getArticles
   end
 
   post "/country" do
@@ -37,8 +40,7 @@ class ApplicationController < Sinatra::Base
   delete "/article/:id" do
     article = Article.find(params[:id])
     article.destroy
-    articles = Article.all
-    articles.to_json(include: [{ category: { only: :name } }, { country: { only: :name } }])
+    getArticles
   end
 
   patch "/article/:id" do
@@ -50,7 +52,6 @@ class ApplicationController < Sinatra::Base
       country_id: params[:country_id],
       category_id: params[:category_id],
     )
-    articles = Article.all
-    articles.to_json(include: [{ category: { only: :name } }, { country: { only: :name } }])
+    getArticles
   end
 end
