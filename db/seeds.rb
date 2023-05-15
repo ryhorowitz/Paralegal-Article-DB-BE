@@ -14,12 +14,6 @@ CSV.foreach("db/seed_countries.csv", headers: true) do |row|
   country.save
 end
 
-CSV.foreach("db/seed_categories.csv", headers: true) do |row|
-  category = Category.new
-  category.name = row["name"]
-  category.save
-end
-
 CSV.foreach("db/seed_articles.csv", headers: true) do |row|
   country = Country.find_by(name: row["country"])
   category = Category.find_by(name: row["category"])
